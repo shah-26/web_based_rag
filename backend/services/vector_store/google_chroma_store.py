@@ -136,9 +136,9 @@ def _embed_texts(
         #     contents=batch,
         #     config=_build_embed_config(config),
         # )
-
+        # embeddings.extend(_extract_embedding_values(response))
         response = EmbeddingsProviderFactory.create().embed(batch)
-        embeddings.extend(_extract_embedding_values(response))
+        embeddings.extend(response)
 
     if len(embeddings) != len(texts):
         raise RuntimeError(

@@ -14,11 +14,11 @@ class AzureOpenAIEmbeddingsProvider(EmbeddingsProvider):
             api_version=envConfig.AZURE_OPENAI_API_VERSION,
         )  # Placeholder, replace with actual Azure OpenAI client initialization
 
-    def embed(self, batch: str):
+    def embed(self, batch: list[str]) -> list[list[float]]:
         # Call Azure OpenAI embedding API here
         response = self.client.embeddings.create(
             input=batch,
             # Placeholder, replace with actual model name
             model=envConfig.AZURE_DEPLOYMENT_ID,
         )
-        return response
+        return [item.embedding for item in response.data]
