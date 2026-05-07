@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import json
 import requests
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from crawler import crawl_site
 from services.answering import AnswerConfig, answer_user_query
 from services.chunking import ChunkingConfig, chunk_crawled_pages
@@ -9,6 +10,18 @@ from services.crawler.crawl_empower import crawl_all
 from services.vector_store import ChromaStoreConfig, EmbeddingConfig, index_chunks, query_chunks
 from core.env_config import envConfig
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 def get_waters_article_links():
